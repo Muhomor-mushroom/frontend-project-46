@@ -6,7 +6,7 @@ program
 
 program
     .argument('<filepath1>')
-    .argument('<filepath1>')
+    .argument('<filepath2>')
 program
     .option('-v, --version', 'output the version number')
     .option('-f, --format [type]', 'output format')
