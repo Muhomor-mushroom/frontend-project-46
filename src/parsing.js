@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import * as fs from 'fs';
 import { cwd } from 'node:process';
 
 
