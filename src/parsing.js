@@ -1,10 +1,9 @@
-const fs = require('node:fs');
-const path = require('node:path'); 
-const { cwd } = require('node:process');
+import fs from 'node:fs';
+import { cwd } from 'node:process';
 
 
 const parsing = (filepath) => {
     const currentDir = cwd();
-    return(fs.readFileSync(filepath));
+    return JSON.parse(fs.readFileSync(filepath, { encoding: 'utf8'}));
 }
-console.log(parsing())
+export default parsing

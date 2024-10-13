@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-const { program } = require('commander');
-const { path } = require('node:path');
-const fs = require('node:fs');
+import { program } from 'commander';
+import parsing from '../src/parsing.js';
 
 program
     .description('Compares two configuration files and shows a difference.')
@@ -10,8 +9,9 @@ program
     .option('-v, --version', 'output the version number')
     .option('-f, --format [type]', 'output format')
     .helpOption('-h, --help', 'output usage information')
-    .action((file1,file2) => {
-        console.log('hello, World!');
+    .action((filepath1,filepath2) => {
+        console.log(parsing(filepath1));
+        console.log(parsing(filepath2));
     })
     
     program.parse();

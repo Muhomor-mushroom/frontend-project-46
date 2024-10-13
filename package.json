@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Second project for Hexlet created by Svetlov Alexander",
   "main": "gendiff.js",
+  "type": "module",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
