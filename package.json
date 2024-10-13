@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "Second project for Hexlet created by Svetlov Alexander",
-  "main": "index.js",
+  "main": "gendiff.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
