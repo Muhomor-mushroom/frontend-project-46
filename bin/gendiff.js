@@ -9,10 +9,7 @@ program
     .option('-v, --version', 'output the version number')
     .option('-f, --format [type]', 'output format')
     .helpOption('-h, --help', 'output usage information')
-    .action((filepath1,filepath2) => {
-        console.log(parsing('/Users/ax/Desktop/2 project/frontend-project-46/file1.json '));
-        console.log(parsing('/Users/ax/Desktop/2 project/frontend-project-46/file2.json '));
-    })
+    .action((parsing('/Users/ax/Desktop/2 project/frontend-project-46/file1.json', '/Users/ax/Desktop/2 project/frontend-project-46/file2.json')))
     
     program.parse();
 
