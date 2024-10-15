@@ -13,24 +13,33 @@ const jsonInArray = (json) => {
 const showDiff = (firstFilePath, secondFilePath) => {
     const firstParsedFile = parsing(firstFilePath);
     const secondParsedFile = parsing(secondFilePath);
-
-    const firstParsedInArr = jsonInArray(firstParsedFile).sort();
-    const secondParsedInArr = jsonInArray(secondParsedFile).sort();
-
-    const difference = _.difference(firstParsedInArr, secondParsedInArr)
-
-    let result = {};
-
-for (let key in firstParsedInArr) {
-    if (secondParsedInArr.includes(key)) {
-        const splittedKey = key.split(' ');
-        console.log(splittedKey);
-        result.splicedKey[0] = splittedKey[2];
-    }
-}
-
     
-    console.log(result);
+    const keysOfFirstFiles = Object.keys(firstParsedFile);
+    const keysOfSecondFiles = Object.keys(secondParsedFile);
+    
+    let keysOfAllFiles = [];
+
+    keysOfFirstFiles.forEach((key) => keysOfAllFiles.push(key));
+    keysOfSecondFiles.forEach((key) => keysOfAllFiles.push(key));
+
+    keysOfAllFiles = _.uniq(keysOfAllFiles)
+
+    const searchDiffOfKeys = keysOfAllFiles.map((key) => {
+        if (!keysOfFirstFiles.includes(key) && keysOfSecondFiles.includes(key)) {
+            return `+ ${key}: ${secondParsedFile[key]}\n`
+        }
+        else if (keysOfFirstFiles.includes(key) && !keysOfSecondFiles.includes(key)) {
+            return `- ${key}: ${firstParsedFile[key]}\n`
+        }
+        else if (keysOfFirstFiles.includes(key) && keysOfSecondFiles.includes(key)) {
+            if (firstParsedFile[key] == secondParsedFile[key]) {
+                return `  ${key}: ${firstParsedFile[key]}\n`
+            }
+            return `- ${key}: ${firstParsedFile[key]}\n+ ${key}: ${secondParsedFile[key]}\n` 
+        }
+    })
+
+    console.log(`{\n${searchDiffOfKeys.join('')}}`)
 }
 
 export default showDiff;
