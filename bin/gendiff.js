@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import parsing from '../src/parsing.js';
+import showDiff from '../src/showDiff.js';
 
 program
     .description('Compares two configuration files and shows a difference.')
@@ -9,7 +9,7 @@ program
     .option('-v, --version', 'output the version number')
     .option('-f, --format [type]', 'output format')
     .helpOption('-h, --help', 'output usage information')
-    .action((parsing('/Users/ax/Desktop/2 project/frontend-project-46/file1.json', '/Users/ax/Desktop/2 project/frontend-project-46/file2.json')))
+    .action((showDiff('/Users/ax/Desktop/2 project/frontend-project-46/file1.json', '/Users/ax/Desktop/2 project/frontend-project-46/file2.json')))
     
     program.parse();
 
