@@ -8,9 +8,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Клонируем репозиторий
     - uses: actions/checkout@v1
+    # Устанавливаем NodeJS
     - uses: actions/setup-node@v4
-    - run: npm i -g npm
-    - run: npm i --save lodash
+    # Устанавливаем все зависимости
+    - run: npm i
+    # Запускаем тесты
     - name: run tests
       run: npx jest
