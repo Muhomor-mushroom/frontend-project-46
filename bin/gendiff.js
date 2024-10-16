@@ -6,7 +6,7 @@ import showDiff from '../src/showDiff.js';
 
 program
   .description('Compares two configuration files and shows a difference.')
-  .arguments('<filepath1>', '<filepath2>')
+  .arguments('<filepath1>, <filepath2>')
   .option('-v, --version', 'output the version number')
   .option('-f, --format [type]', 'output format')
   .helpOption('-h, --help', 'output usage information')
@@ -19,5 +19,3 @@ program
 
 program.parse();
 
-const options = program.opts();
-console.log(options);

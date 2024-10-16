@@ -1,15 +1,6 @@
 import _ from 'lodash';
 import parsing from './parsing.js';
 
-const jsonInArray = (json) => {
-  const entries = Object.entries(json);
-  let result = [];
-  for (const [key, value] of entries) {
-    result = [...result, `${key} = ${value}`];
-  }
-  return result;
-};
-
 const showDiff = (firstFilePath, secondFilePath) => {
   const firstParsedFile = parsing(firstFilePath);
   const secondParsedFile = parsing(secondFilePath);
@@ -41,5 +32,4 @@ const showDiff = (firstFilePath, secondFilePath) => {
 
   console.log(`{\n${searchDiffOfKeys.join('')}}`);
 };
-
 export default showDiff;
