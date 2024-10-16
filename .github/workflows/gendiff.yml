@@ -13,4 +13,4 @@ jobs:
         # Configures the node version used on GitHub-hosted runners
         # https://github.com/actions/setup-node
         uses: actions/setup-node@v4
-        - run: make test
+        - run: npx jest
