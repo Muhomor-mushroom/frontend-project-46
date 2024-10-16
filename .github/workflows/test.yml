@@ -10,5 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v4
+    - run: npm i -g npm
+    - run: npm i --save lodash
     - name: run tests
       run: npx jest
