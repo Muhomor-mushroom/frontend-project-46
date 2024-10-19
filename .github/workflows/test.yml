@@ -14,6 +14,8 @@ jobs:
     - uses: actions/setup-node@v4
     # Устанавливаем все зависимости
     - run: npm i
+    # Проверяем линтером
+    - run: make lint
     # Запускаем тесты
     - name: run tests
       run: npx jest
