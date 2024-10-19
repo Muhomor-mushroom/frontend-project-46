@@ -6,6 +6,6 @@ const showDiffExpected = () => {
 - proxy: 123.234.53.22
 - follow: false
 + verbose: true
-}`)
-}
-export default showDiffExpected
+}`);
+};
+export default showDiffExpected;
