@@ -17,6 +17,8 @@ const showDiff = (firstFilePath, secondFilePath) => {
 
     keysOfAllFiles = _.uniq(keysOfAllFiles);
 
+    console.log(keysOfAllFiles);
+
     const diff = keysOfAllFiles.map((key) => {
       if (!_.isObject(firstFile[key]) && !_.isObject(secondFile[key])) {
         if (firstFile[key] === secondFile[key]) {
