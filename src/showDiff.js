@@ -2,21 +2,6 @@ import _ from 'lodash';
 import * as fs from 'fs';
 import parsing from './parsing.js';
 
-const findKeysOfObj = (obj) => {
-  let result = [];
-  const iter = (obj) => {
-    for (let key in obj) {
-      if (_.isObject(obj[key])) {
-        result = [...result, key];
-        iter(obj[key]);
-      }
-      result = [...result, key]
-    }
-  }
-  iter(obj);
-  return result;
-}
-
 const showDiff = (firstFilePath, secondFilePath) => {
   const firstFile = fs.readFileSync(firstFilePath, { encoding: 'utf8' });
   const secondFile = fs.readFileSync(secondFilePath, { encoding: 'utf8' });
@@ -25,8 +10,8 @@ const showDiff = (firstFilePath, secondFilePath) => {
   const secondParsedFile = parsing(secondFilePath, secondFile);
 
   const searchDiffOfKeys = (firstFile, secondFile, depth = 1) => {
-    const keysOfFirstFiles = findKeysOfObj(firstFile);
-    const keysOfSecondFiles = findKeysOfObj(secondFile);
+    const keysOfFirstFiles = Object.keys(firstFile);
+    const keysOfSecondFiles = Object.keys(secondFile);
 
     let keysOfAllFiles = [...keysOfFirstFiles, keysOfSecondFiles];
 
