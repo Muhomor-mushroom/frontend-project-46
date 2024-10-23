@@ -2,6 +2,21 @@ import _ from 'lodash';
 import * as fs from 'fs';
 import parsing from './parsing.js';
 
+const findKeysOfObj = (obj) => {
+  let result = [];
+  const iter = (obj) => {
+    for (let key in obj) {
+      if (_.isObject(obj[key])) {
+        result = [...result, key];
+        iter(obj[key]);
+      }
+      result = [...result, key]
+    }
+  }
+  iter(obj);
+  return result;
+}
+
 const showDiff = (firstFilePath, secondFilePath) => {
   const firstFile = fs.readFileSync(firstFilePath, { encoding: 'utf8' });
   const secondFile = fs.readFileSync(secondFilePath, { encoding: 'utf8' });
@@ -9,28 +24,32 @@ const showDiff = (firstFilePath, secondFilePath) => {
   const firstParsedFile = parsing(firstFilePath, firstFile);
   const secondParsedFile = parsing(secondFilePath, secondFile);
 
-  const keysOfFirstFiles = Object.keys(firstParsedFile);
-  const keysOfSecondFiles = Object.keys(secondParsedFile);
+  const searchDiffOfKeys = (firstFile, secondFile, depth = 1) => {
+    const keysOfFirstFiles = findKeysOfObj(firstFile);
+    const keysOfSecondFiles = findKeysOfObj(secondFile);
 
-let keysOfAllFiles = []
+    let keysOfAllFiles = [...keysOfFirstFiles, keysOfSecondFiles];
 
-  keysOfFirstFiles.forEach((key) => keysOfAllFiles.push(key));
-  keysOfSecondFiles.forEach((key) => keysOfAllFiles.push(key));
+    keysOfAllFiles = _.uniq(keysOfAllFiles);
 
-  keysOfAllFiles = _.uniq(keysOfAllFiles);
-
-   const searchDiffOfKeys = keysOfAllFiles.map((key) => {
-    if (firstParsedFile[key] == secondParsedFile[key]) {
-      return `  ${key}: ${firstParsedFile[key]}\n`;}
-    if (!keysOfFirstFiles.includes(key) && keysOfSecondFiles.includes(key)) {
-      return `+ ${key}: ${secondParsedFile[key]}\n`;
-    }
-    if (keysOfFirstFiles.includes(key) && !keysOfSecondFiles.includes(key)) {
-      return `- ${key}: ${firstParsedFile[key]}\n`;
-    }
-    return `- ${key}: ${firstParsedFile[key]}\n+ ${key}: ${secondParsedFile[key]}\n`;
-  });
-
-  console.log(`{\n${searchDiffOfKeys.join('')}}`);
+    const diff = keysOfAllFiles.map((key) => {
+      if (!_.isObject(firstFile[key]) && !_.isObject(secondFile[key])) {
+        if (firstFile[key] === secondFile[key]) {
+          return `${' '.repeat(depth)} ${key}: ${firstFile[key]}\n`;
+        }
+        if (!keysOfFirstFiles.includes(key) && keysOfSecondFiles.includes(key)) {
+          return `${' '.repeat(depth)}+ ${key}: ${secondFile[key]}\n`;
+        }
+        if (keysOfFirstFiles.includes(key) && !keysOfSecondFiles.includes(key)) {
+          return `${' '.repeat(depth)}- ${key}: ${firstFile[key]}\;`
+        }
+        return `${' '.repeat(depth)}- ${key}: ${firstFile[key]}\n${' '.repeat(depth)}+ ${key}: ${secondFile[key]}\n`
+      }
+      searchDiffOfKeys(firstFile[key], secondFile[key], depth + 1)
+    })
+    return diff;
+  };
+  const result = searchDiffOfKeys(firstParsedFile, secondParsedFile);
+  console.log(`{\n${result.join('')}}`);
 };
 export default showDiff;
