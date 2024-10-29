@@ -13,27 +13,27 @@ const showDiff = (firstFilePath, secondFilePath) => {
     const keysOfFirstFiles = Object.keys(file1);
     const keysOfSecondFiles = Object.keys(file2);
     const spacesCount = 4;
-    const spaces = ' '.repeat((spacesCount * depth) - 2)
+    const spaces = ' '.repeat((spacesCount * depth) - 2);
     
     let keysOfAllFiles = _.union(keysOfFirstFiles, keysOfSecondFiles).sort();
     const diff = keysOfAllFiles.map((key) => {
       if (!keysOfFirstFiles.includes(key)) {
-          return `\n+ ${key}: ${file1[key]}`;
+          return `${spaces}+ ${key}: ${file2[key]}`;
         }
         if (!keysOfSecondFiles.includes(key)) {
-          return `\n- ${key}: ${file1[key]};`
+          return `${spaces}- ${key}: ${file1[key]}`;
         }
         if (_.isObject(file1[key]) && _.isObject(file2[key])) {
-          return `\n${key}: {\n${searchDiffOfKeys(file1[key], file2[key], depth + 1)}\n${spaces}}`
+          return `${spaces}  ${key}: {\n${searchDiffOfKeys(file1[key], file2[key], depth + 1)}\n${spaces}  }`
         }
         if (file1[key] === file2[key]) {
-          return `\n  ${key}: ${file1[key]}`;
+          return `${spaces}  ${key}: ${file1[key]}`;
         }
-        return `\n- ${key}: ${file1[key]}\n+ ${key}: ${file2[key]}`
+        return `${spaces}- ${key}: ${file1[key]}${spaces}\n${spaces}+ ${key}: ${file2[key]}`
     })
-    return diff;
+    return diff.join('\n');
   };
   const result = searchDiffOfKeys(firstParsedFile, secondParsedFile);
-  console.log(`{\n${result.join('')}}`);
+  console.log(`{\n${result}\n}`);
 };
 export default showDiff;
