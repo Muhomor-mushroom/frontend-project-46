@@ -9,30 +9,27 @@ const showDiff = (firstFilePath, secondFilePath) => {
   const firstParsedFile = parsing(firstFilePath, firstFile);
   const secondParsedFile = parsing(secondFilePath, secondFile);
 
-  const searchDiffOfKeys = (firstFile, secondFile, depth = 1) => {
-    const keysOfFirstFiles = Object.keys(firstFile);
-    const keysOfSecondFiles = Object.keys(secondFile);
-
-    let keysOfAllFiles = [...keysOfFirstFiles, keysOfSecondFiles];
-
-    keysOfAllFiles = _.uniq(keysOfAllFiles);
-
-    console.log(keysOfAllFiles);
-
+  const searchDiffOfKeys = (file1, file2, depth = 1) => {
+    const keysOfFirstFiles = Object.keys(file1);
+    const keysOfSecondFiles = Object.keys(file2);
+    const spacesCount = 4;
+    const spaces = ' '.repeat((spacesCount * depth) - 2)
+    
+    let keysOfAllFiles = _.union(keysOfFirstFiles, keysOfSecondFiles).sort();
     const diff = keysOfAllFiles.map((key) => {
-      if (!_.isObject(firstFile[key]) && !_.isObject(secondFile[key])) {
-        if (firstFile[key] === secondFile[key]) {
-          return `${' '.repeat(depth)} ${key}: ${firstFile[key]}\n`;
+      if (!keysOfFirstFiles.includes(key)) {
+          return `\n+ ${key}: ${file1[key]}`;
         }
-        if (!keysOfFirstFiles.includes(key) && keysOfSecondFiles.includes(key)) {
-          return `${' '.repeat(depth)}+ ${key}: ${secondFile[key]}\n`;
+        if (!keysOfSecondFiles.includes(key)) {
+          return `\n- ${key}: ${file1[key]};`
         }
-        if (keysOfFirstFiles.includes(key) && !keysOfSecondFiles.includes(key)) {
-          return `${' '.repeat(depth)}- ${key}: ${firstFile[key]}\;`
+        if (_.isObject(file1[key]) && _.isObject(file2[key])) {
+          return `\n${key}: {\n${searchDiffOfKeys(file1[key], file2[key], depth + 1)}\n${spaces}}`
         }
-        return `${' '.repeat(depth)}- ${key}: ${firstFile[key]}\n${' '.repeat(depth)}+ ${key}: ${secondFile[key]}\n`
-      }
-      searchDiffOfKeys(firstFile[key], secondFile[key], depth + 1)
+        if (file1[key] === file2[key]) {
+          return `\n  ${key}: ${file1[key]}`;
+        }
+        return `\n- ${key}: ${file1[key]}\n+ ${key}: ${file2[key]}`
     })
     return diff;
   };
