@@ -10,7 +10,7 @@ program
   .option('-v, --version', 'output the version number')
   .option('-f, --format [type]', 'output format')
   .helpOption('-h, --help', 'output usage information')
-  .action((filepath1, filepath2, option) => {
+  .action((option, filepath1, filepath2) => {
     const options = program.opts();
     const myCWD = cwd();
     console.log(`first path is ${filepath1}, second path is ${filepath2}`);
