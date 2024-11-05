@@ -10,12 +10,17 @@ test('showDiffJsons', () => {
   expect(result).toEqual(showDiffExpected());
 });
 test('ShowDiffYamls', () => {
-  const myCWD = cwd()
+  const myCWD = cwd();
   const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.yml'), path.resolve(myCWD, '__fixtures__/file2.yml'));
-  expect(result).toEqual(showDiffExpected())
+  expect(result).toEqual(showDiffExpected());
 });
 test('ShowDiffPlainJson', () => {
   const myCWD = cwd();
   const result = showdiff(path.resolve(myCWD, '__fixtures__/file1.json'), path.resolve(myCWD, '__fixtures__/file2.json', 'plained'));
-  expect(result).toEqual(showDiffPlainExpected())
-})
+  expect(result).toEqual(showDiffPlainExpected());
+});
+test('ShowDiffPlainYamls', () => {
+  const myCWD = cwd();
+  const result = showdiff(path.resolve(myCWD, '__fixtures__/file1.yml'), path.resolve(myCWD, '__fixtures__/file2.yml', 'plained'));
+  expect(result).toEqual(showDiffPlainExpected());
+});

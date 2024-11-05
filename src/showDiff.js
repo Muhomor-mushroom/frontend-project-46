@@ -13,42 +13,43 @@ const showDiff = (firstFilePath, secondFilePath, format = 'stylish') => {
   const searchDiffOfKeys = (file1, file2) => {
     const keysOfFirstFiles = Object.keys(file1);
     const keysOfSecondFiles = Object.keys(file2);
-    
-    let keysOfAllFiles = _.union(keysOfFirstFiles, keysOfSecondFiles).sort();
+
+    const keysOfAllFiles = _.union(keysOfFirstFiles, keysOfSecondFiles).sort();
     const diff = keysOfAllFiles.map((keys) => {
       if (!keysOfFirstFiles.includes(keys)) {
-          return {
-            key : keys,
-            value: file2[keys],
-            type: 'added'
-          };
-        }
-        if (!keysOfSecondFiles.includes(keys)) {
-          return {
-          key : keys,
-          value: file1[keys],
-          type: "removed"
-        };
-        }
-        if (_.isObject(file1[keys]) && _.isObject(file2[keys])) {
-          return {
-            key: keys,
-            children: searchDiffOfKeys(file1[keys], file2[keys])}
-        }
-        if (file1[keys] === file2[keys]) {
-          return {
-            key : keys,
-            value: file1[keys],
-            type: "unchanged"
-          };
-        }
         return {
-          key : keys,
-          oldValue: file1[keys],
-          type: "changed",
-          newValue: file2[keys],
+          key: keys,
+          value: file2[keys],
+          type: 'added',
         };
-    })
+      }
+      if (!keysOfSecondFiles.includes(keys)) {
+        return {
+          key: keys,
+          value: file1[keys],
+          type: 'removed',
+        };
+      }
+      if (_.isObject(file1[keys]) && _.isObject(file2[keys])) {
+        return {
+          key: keys,
+          children: searchDiffOfKeys(file1[keys], file2[keys]),
+        };
+      }
+      if (file1[keys] === file2[keys]) {
+        return {
+          key: keys,
+          value: file1[keys],
+          type: 'unchanged',
+        };
+      }
+      return {
+        key: keys,
+        oldValue: file1[keys],
+        type: 'changed',
+        newValue: file2[keys],
+      };
+    });
     return diff;
   };
   const resultedObj = searchDiffOfKeys(firstParsedFile, secondParsedFile);
