@@ -17,12 +17,12 @@ test('ShowDiffYamls', () => {
 });
 test('ShowDiffPlainJson', () => {
   const myCWD = cwd();
-  const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.json'), path.resolve(myCWD, '__fixtures__/file2.json', 'plained'));
+  const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.json'), path.resolve(myCWD, '__fixtures__/file2.json', 'plain'));
   expect(result).toEqual(showDiffPlainExpected());
 });
 test('ShowDiffPlainYamls', () => {
   const myCWD = cwd();
-  const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.yml'), path.resolve(myCWD, '__fixtures__/file2.yml', 'plained'));
+  const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.yml'), path.resolve(myCWD, '__fixtures__/file2.yml', 'plain'));
   expect(result).toEqual(showDiffPlainExpected());
 });
 test('ShowDiffJsonInJson', () => {
