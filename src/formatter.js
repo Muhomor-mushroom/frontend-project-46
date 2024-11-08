@@ -1,13 +1,20 @@
 import _ from 'lodash';
 
+const stringify = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  return typeof value === 'string' ? `'${value}'` : value;
+};
+
 const formatter = (array, format = 'stylish') => {
   let iter;
   switch (format) {
     case 'stylish':
-      iter = (array, depth = 1) => {
+      iter = (arr, depth = 1) => {
         const spacesCount = 4;
         const spaces = ' '.repeat((spacesCount * depth) - 2);
-        const result = array.map((object) => {
+        const result = arr.map((object) => {
           if (object.type === 'added') {
             return `${spaces}+ ${object.key}: ${object.value}`;
           }
@@ -25,56 +32,31 @@ const formatter = (array, format = 'stylish') => {
         return result.join('\n');
       };
       return `{\n${iter(array)}\n}`;
-      break;
 
     case 'plain':
-      iter = (array, depth = '') => {
-        const result = array.map((object) => {
+      iter = (arr, depth = '') => {
+        const result = arr.map((object) => {
           if (object.type === 'added') {
-            return `Property '${depth}.${object.key}' was added with value: ${object.value}`;
+            return `Property '${depth}${object.key}' was added with value: ${stringify(object.value)}\n`;
           }
           if (object.type === 'removed') {
-            return `Property '${depth}.${object.key}' was removed`;
+            return `Property '${depth}${object.key}' was removed\n`;
           }
           if (_.has(object, 'children')) {
-            return `${iter(object.children, object.key)}'`;
+            return `${iter(object.children, `${depth}${object.key}.`)}`;
           }
           if (object.type === 'changed') {
-            return `Property '${depth}.${object.key}' was updated. From '${object.oldValue}' to '${object.newValue}'`;
+            return `Property '${depth}${object.key}' was updated. From ${stringify(object.oldValue)} to ${stringify(object.newValue)}\n`;
           }
+          return null;
         });
-        return result.join('\n');
+        return result.join('');
       };
       return `${iter(array)}`;
-      break;
     case 'json':
-      iter = (array, depth = 1) => {
-        const spacesCount = 4;
-        const spaces = ' '.repeat((spacesCount * depth) - 2);
-        const result = array.map((object) => {
-          if (object.type === 'added') {
-            return `$+ ${object.key}: ${object.value}`;
-          }
-          if (object.type === 'removed') {
-            return `- ${object.key}: ${object.value}`;
-          }
-          if (_.has(object, 'children')) {
-            return `${object.key}: {${iter(object.children, depth + 1)}}`;
-          }
-          if (object.type === 'unchanged') {
-            return `${object.key}: ${object.value}`;
-          }
-          return `- ${object.key}: ${object.oldValue}+ ${object.key}: ${object.newValue}`;
-        });
-        const joinedResult = result.join('');
-        const resultInJson = JSON.stringify(joinedResult);
-        return resultInJson;
-        };
-         return `{${iter(array)}}`;
-        break;
+      return JSON.stringify(array);
     default:
-        return;
-        break;
+      throw new Error('invalid format');
   }
 };
 export default formatter;
