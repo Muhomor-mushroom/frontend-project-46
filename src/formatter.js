@@ -41,7 +41,7 @@ const formatter = (array, format = 'stylish') => {
           if (object.type === 'unchanged') {
             return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
           }
-          return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}${spaces}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
+          return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
         });
         return result.join('\n');
       };
