@@ -39,5 +39,5 @@ test('ShowDiffPlainYamlsInJson', () => {
 test('InvalidFormat', () => {
   const myCWD = cwd();
   const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.json'), path.resolve(myCWD, '__fixtures__/file2.json'), 'beautiful');
-  expect(result).toEqual(showDiffInvalidFormat);
+  expect(result).toEqual(showDiffInvalidFormat());
 });
