@@ -2,10 +2,10 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "Second project for Hexlet created by Svetlov Alexander",
-  "main": "gendiff.js",
+  "main": "src/showDiff.js",
   "type": "module",
   "bin": {
-    "gendiff": "src/showDiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
