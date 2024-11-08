@@ -54,6 +54,6 @@ const showDiff = (firstFilePath, secondFilePath, format = 'stylish') => {
   };
   const resultedObj = searchDiffOfKeys(firstParsedFile, secondParsedFile);
   const formattedResult = formatter(resultedObj, format);
-  console.log(formattedResult);
+  return formattedResult;
 };
 export default showDiff;

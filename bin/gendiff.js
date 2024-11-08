@@ -14,7 +14,7 @@ program
     const myCWD = cwd();
     const opts = program.opts();
     console.log(`first path is ${filepath1}, second path is ${filepath2}`);
-    showDiff(path.resolve(`${myCWD}`, `${filepath1}`), path.resolve(`${myCWD}`, `${filepath2}`), opts.format);
+    console.log(showDiff(path.resolve(`${myCWD}`, `${filepath1}`), path.resolve(`${myCWD}`, `${filepath2}`), opts.format));
   });
 
 program.parse();
