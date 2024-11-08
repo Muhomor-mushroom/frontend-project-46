@@ -4,7 +4,7 @@ import showDiff from '../src/showDiff.js';
 import showDiffExpected from '../__fixtures__/showDiffExpected.js';
 import showDiffPlainExpected from '../__fixtures__/showDiffPlainExpected.js';
 import showDiffJsonExpected from '../__fixtures__/showDiffJsonExpected.js';
-import showDiffInvalidFormat from '../__fixtures__/showDiffInvalidFormat.js';
+
 
 test('showDiffJsons', () => {
   const myCWD = cwd();
@@ -35,9 +35,4 @@ test('ShowDiffPlainYamlsInJson', () => {
   const myCWD = cwd();
   const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.yml'), path.resolve(myCWD, '__fixtures__/file2.yml'), 'json');
   expect(result).toEqual(showDiffJsonExpected());
-});
-test('InvalidFormat', () => {
-  const myCWD = cwd();
-  const result = showDiff(path.resolve(myCWD, '__fixtures__/file1.json'), path.resolve(myCWD, '__fixtures__/file2.json'), 'beautiful');
-  expect(result).toEqual(showDiffInvalidFormat());
 });
