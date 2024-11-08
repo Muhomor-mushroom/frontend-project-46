@@ -7,6 +7,20 @@ const stringify = (value) => {
   return typeof value === 'string' ? `'${value}'` : value;
 };
 
+const disClose = (value, depth = 1) => {
+  if (!_.isObject(value)) {
+    return `${value}`;
+  }
+  const spacesCount = 4;
+  const startSpaces = ' '.repeat((spacesCount * (depth + 1)) - 2);
+  const endSpaces = ' '.repeat(spacesCount * depth - 2);
+  const keys = Object.keys(value);
+  const result = keys.map((key) => {
+    return `${startSpaces}  ${key}: ${disClose(value[key], depth + 1)}`
+  })
+  return `{\n${result.join('\n')}\n${endSpaces}  }`;
+}
+
 const formatter = (array, format = 'stylish') => {
   let iter;
   switch (format) {
@@ -16,18 +30,18 @@ const formatter = (array, format = 'stylish') => {
         const spaces = ' '.repeat((spacesCount * depth) - 2);
         const result = arr.map((object) => {
           if (object.type === 'added') {
-            return `${spaces}+ ${object.key}: ${object.value}`;
+            return `${spaces}+ ${object.key}: ${disClose(object.value, depth)}`;
           }
           if (object.type === 'removed') {
-            return `${spaces}- ${object.key}: ${object.value}`;
+            return `${spaces}- ${object.key}: ${disClose(object.value, depth)}`;
           }
           if (_.has(object, 'children')) {
             return `${spaces}  ${object.key}: {\n${iter(object.children, depth + 1)}\n${spaces}  }`;
           }
           if (object.type === 'unchanged') {
-            return `${spaces}  ${object.key}: ${object.value}`;
+            return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
           }
-          return `${spaces}- ${object.key}: ${object.oldValue}${spaces}\n${spaces}+ ${object.key}: ${object.newValue}`;
+          return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}${spaces}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
         });
         return result.join('\n');
       };
