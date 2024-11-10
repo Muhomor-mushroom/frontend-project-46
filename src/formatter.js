@@ -20,10 +20,9 @@ const disClose = (value, depth = 1) => {
 };
 
 const formatter = (array, format = 'stylish') => {
-  let iter = '';
   switch (format) {
     case 'stylish':
-      iter = (arr, depth = 1) => {
+      const iter1 = (arr, depth = 1) => {
         const spacesCount = 4;
         const spaces = ' '.repeat((spacesCount * depth) - 2);
         const result = arr.map((object) => {
@@ -43,10 +42,10 @@ const formatter = (array, format = 'stylish') => {
         });
         return result.join('\n');
       };
-      return `{\n${iter(array)}\n}`;
+      return `{\n${iter1(array)}\n}`;
 
     case 'plain':
-      iter = (arr, depth = '') => {
+      const iter2 = (arr, depth = '') => {
         const result = arr.map((object) => {
           if (object.type === 'added') {
             return `Property '${depth}${object.key}' was added with value: ${stringify(object.value)}\n`;
@@ -65,7 +64,7 @@ const formatter = (array, format = 'stylish') => {
         const finalResult = result.join('');
         return finalResult;
       };
-      return `${iter(array).slice(0, -1)}`;
+      return `${iter2(array).slice(0, -1)}`;
     case 'json':
       return JSON.stringify(array);
     default:
