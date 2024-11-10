@@ -65,9 +65,9 @@ const formatter = (array, format = 'stylish') => {
           return null;
         });
         let finalResult = result.join('');
-        return finalResult.slice(0, -1);
+        return finalResult;
       };
-      return `${iter(array)}`;
+      return `${iter(array).slice(0, -1)}`;
     case 'json':
       return JSON.stringify(array);
     default:
