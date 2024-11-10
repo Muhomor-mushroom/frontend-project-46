@@ -20,7 +20,7 @@ const disClose = (value, depth = 1) => {
 };
 
 const formatter = (array, format = 'stylish') => {
-  let iter;
+  let iter = '';
   switch (format) {
     case 'stylish':
       iter = (arr, depth = 1) => {

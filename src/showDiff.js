@@ -14,8 +14,9 @@ const showDiff = (firstFilePath, secondFilePath, format = 'stylish') => {
     const keysOfFirstFiles = Object.keys(file1);
     const keysOfSecondFiles = Object.keys(file2);
 
-    const keysOfAllFiles = _.union(keysOfFirstFiles, keysOfSecondFiles).sort();
-    const diff = keysOfAllFiles.map((keys) => {
+    const keysOfAllFiles = _.union(keysOfFirstFiles, keysOfSecondFiles);
+    const sortedKeys =  keysOfAllFiles.sort();
+    const diff = sortedKeys.map((keys) => {
       if (!keysOfFirstFiles.includes(keys)) {
         return {
           key: keys,
