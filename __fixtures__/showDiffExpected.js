@@ -1,5 +1,5 @@
 const showDiffExpected = () => {
-  console.log(`{
+  return `{
     common: {
       + follow: false
         setting1: Value 1
@@ -42,6 +42,6 @@ const showDiffExpected = () => {
         }
         fee: 100500
     }
-}`);
+}`
 };
 export default showDiffExpected;
