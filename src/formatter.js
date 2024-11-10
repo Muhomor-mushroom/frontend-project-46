@@ -21,7 +21,7 @@ const disClose = (value, depth = 1) => {
 
 const formatter = (array, format = 'stylish') => {
   switch (format) {
-    case 'stylish':
+    case 'stylish': {
       const iter1 = (arr, depth = 1) => {
         const spacesCount = 4;
         const spaces = ' '.repeat((spacesCount * depth) - 2);
@@ -43,8 +43,9 @@ const formatter = (array, format = 'stylish') => {
         return result.join('\n');
       };
       return `{\n${iter1(array)}\n}`;
+    }
 
-    case 'plain':
+    case 'plain': {
       const iter2 = (arr, depth = '') => {
         const result = arr.map((object) => {
           if (object.type === 'added') {
@@ -65,6 +66,7 @@ const formatter = (array, format = 'stylish') => {
         return finalResult;
       };
       return `${iter2(array).slice(0, -1)}`;
+    }
     case 'json':
       return JSON.stringify(array);
     default:
