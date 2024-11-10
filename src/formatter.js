@@ -15,11 +15,9 @@ const disClose = (value, depth = 1) => {
   const startSpaces = ' '.repeat((spacesCount * (depth + 1)) - 2);
   const endSpaces = ' '.repeat(spacesCount * depth - 2);
   const keys = Object.keys(value);
-  const result = keys.map((key) => {
-    return `${startSpaces}  ${key}: ${disClose(value[key], depth + 1)}`
-  })
+  const result = keys.map((key) => `${startSpaces}  ${key}: ${disClose(value[key], depth + 1)}`);
   return `{\n${result.join('\n')}\n${endSpaces}  }`;
-}
+};
 
 const formatter = (array, format = 'stylish') => {
   let iter;
@@ -64,7 +62,7 @@ const formatter = (array, format = 'stylish') => {
           }
           return null;
         });
-        let finalResult = result.join('');
+        const finalResult = result.join('');
         return finalResult;
       };
       return `${iter(array).slice(0, -1)}`;
