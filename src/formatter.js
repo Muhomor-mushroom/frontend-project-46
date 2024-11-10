@@ -33,7 +33,7 @@ const formatter = (array, format = 'stylish') => {
             return `${spaces}- ${object.key}: ${disClose(object.value, depth)}`;
           }
           if (_.has(object, 'children')) {
-            return `${spaces}  ${object.key}: {\n${iter(object.children, depth + 1)}\n${spaces}  }`;
+            return `${spaces}  ${object.key}: {\n${iter1(object.children, depth + 1)}\n${spaces}  }`;
           }
           if (object.type === 'unchanged') {
             return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
@@ -54,7 +54,7 @@ const formatter = (array, format = 'stylish') => {
             return `Property '${depth}${object.key}' was removed\n`;
           }
           if (_.has(object, 'children')) {
-            return `${iter(object.children, `${depth}${object.key}.`)}`;
+            return `${iter2(object.children, `${depth}${object.key}.`)}`;
           }
           if (object.type === 'changed') {
             return `Property '${depth}${object.key}' was updated. From ${stringify(object.oldValue)} to ${stringify(object.newValue)}\n`;
