@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Muhomor-mushroom/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Muhomor-mushroom/frontend-project-46/actions)
-![example event parameter](https://github.com/github/docs/actions/workflows/test.yml/badge.svg?event=push)
+![example event parameter](https://github.com/Muhomor-mushroom/frontend-project-46/actions/workflows/test.yml/badge.svg)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d81c6acffc263a555adf/test_coverage)](https://codeclimate.com/github/Muhomor-mushroom/frontend-project-46/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d81c6acffc263a555adf/maintainability)](https://codeclimate.com/github/Muhomor-mushroom/frontend-project-46/maintainability)
 [![asciicast](https://asciinema.org/a/279cUT1UlEyhrpfGR54dmxVvB.svg)](https://asciinema.org/a/279cUT1UlEyhrpfGR54dmxVvB)
