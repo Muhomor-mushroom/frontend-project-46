@@ -1,17 +1,29 @@
 gendiff:
 		node bin/gendiff.js -h
 
-lint:
-		npx eslint .
-		
-linter fix:
-		npx eslint --fix .
+install: deps-install
+	npx simple-git-hooks
 
-coverage:
-		npm test -- --coverage --coverageProvider=v8
+run:
+	bin/nodejs-package.js 10
+
+deps-install:
+	npm ci --legacy-peer-deps
+
+deps-update:
+	npx ncu -u
 
 test:
-		npm test
+	npm test
 
-install: deps-install
-		npx simple-git-hooks
+test-coverage:
+	npm test -- --coverage --coverageProvider=v8
+
+lint:
+	npx eslint .
+
+linter-fix:
+	npx eslint --fix .
+
+publish:
+	npm publish
