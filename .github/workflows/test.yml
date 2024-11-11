@@ -24,10 +24,9 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
     # Устанавливаем NodeJS
     - uses: actions/setup-node@v4
-    # Устанавливаем все зависимости
-    - run: npm install
-    # Запускаем тесты
-    - name: run tests
-      run: make test
-    # Проверяем линтером
-    - run: make lint
+    with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: make install
+      - run: make lint
+      - run: make test
