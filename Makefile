@@ -1,5 +1,5 @@
 gendiff:
-		node bin/gendiff.js -h
+	node bin/gendiff.js -h
 
 install: deps-install
 	npx simple-git-hooks
@@ -27,3 +27,5 @@ linter-fix:
 
 publish:
 	npm publish
+
+.PHONY: test
