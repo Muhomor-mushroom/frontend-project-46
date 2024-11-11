@@ -18,13 +18,10 @@ jobs:
         node-version: [20.x]
 
     steps:
-    # Клонируем репозиторий
-    - uses: actions/checkout@v4
-    # Step's name
-    - name: Use Node.js ${{ matrix.node-version }}
-    # Устанавливаем NodeJS
-    - uses: actions/setup-node@v4
-    with:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: make install
