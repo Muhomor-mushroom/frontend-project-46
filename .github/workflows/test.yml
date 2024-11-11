@@ -13,9 +13,9 @@ jobs:
     # Устанавливаем NodeJS
     - uses: actions/setup-node@v4
     # Устанавливаем все зависимости
-    - run: npm i
-    # Проверяем линтером
-    - run: make lint
+    - run: npm install
     # Запускаем тесты
     - name: run tests
       run: make test
+    # Проверяем линтером
+    - run: make lint

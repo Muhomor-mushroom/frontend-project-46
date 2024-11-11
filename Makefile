@@ -8,7 +8,7 @@ linter fix:
 		npx eslint --fix .
 
 test:
-	npm test -- --coverage --coverageProvider=v8
+	npx jest -- --coverage --coverageProvider=v8
 
 test:
-	npm test
+	npx jest
