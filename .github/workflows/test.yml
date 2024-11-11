@@ -17,5 +17,6 @@ jobs:
     # Проверяем линтером
     - run: make lint
     # Запускаем тесты
+    - name: make test-coverage
     - name: run tests
       run: npx jest

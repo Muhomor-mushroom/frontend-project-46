@@ -12,7 +12,7 @@ EXPLANATION :
  1 - Installed NodeJS package manager on your PC. (nodejs.org);
 
  2 - Downloaded project of last version;
- 
+
  3 - Minimal skills of working with the console.
 
  INSTRUCTION OF WORK WITH THE PROJECT :
