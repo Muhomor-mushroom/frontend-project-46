@@ -13,5 +13,5 @@ test-coverage:
 test:
 		npm test
 
-install: install: deps-install
+install: deps-install
 		npx simple-git-hooks
