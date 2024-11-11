@@ -9,7 +9,7 @@ jobs:
 
     steps:
     # Клонируем репозиторий
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     # Устанавливаем NodeJS
     - uses: actions/setup-node@v4
     # Устанавливаем все зависимости
@@ -17,6 +17,5 @@ jobs:
     # Проверяем линтером
     - run: make lint
     # Запускаем тесты
-    - name: make test-coverage
     - name: run tests
-      run: npx jest
+      run: make test
