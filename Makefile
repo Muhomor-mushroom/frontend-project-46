@@ -8,10 +8,10 @@ linter fix:
 		npx eslint --fix .
 
 test-coverage:
-	npm test -- --coverage --coverageProvider=v8
+		npm test -- --coverage --coverageProvider=v8
 
 test:
-	npm test
+		npm test
 
 install: install: deps-install
-	npx simple-git-hooks
+		npx simple-git-hooks
