@@ -19,10 +19,10 @@ const searchDiffOfKeys = (file1, file2) => {
       return { key, children: searchDiffOfKeys(file1[key], file2[key]), type: 'nested' };
     }
     if (file1[key] === file2[key]) {
-      return { key, value: file1[key], type: 'unchanged' };
+      return { key, value: file1[key], type: 'unchanged', };
     }
     return {
-      key, oldValue: file1[key], type: 'changed', newValue: file2[key],
+      key, oldValue: file1[key], newValue: file2[key], type: 'changed'
     };
   });
 };
@@ -34,8 +34,8 @@ const showDiff = (firstFilePath, secondFilePath, format = 'stylish') => {
   const firstParsedFile = parsing(firstFilePath, firstFile);
   const secondParsedFile = parsing(secondFilePath, secondFile);
 
-  const resultedObj = searchDiffOfKeys(firstParsedFile, secondParsedFile);
-  const formattedResult = formatter(resultedObj, format);
+  const resultedArr = searchDiffOfKeys(firstParsedFile, secondParsedFile);
+  const formattedResult = formatter(resultedArr, format);
   return formattedResult;
 };
 export default showDiff;
