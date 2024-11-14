@@ -19,53 +19,60 @@ const disClose = (value, depth = 1) => {
   return `{\n${result.join('\n')}\n${endSpaces}  }`;
 };
 
+const stylish = (array) => {
+  const iter = (arr, depth = 1) => {
+    const spacesCount = 4;
+    const spaces = ' '.repeat((spacesCount * depth) - 2);
+    const result = arr.map((object) => {
+      if (object.type === 'added') {
+        return `${spaces}+ ${object.key}: ${disClose(object.value, depth)}`;
+      }
+      if (object.type === 'removed') {
+        return `${spaces}- ${object.key}: ${disClose(object.value, depth)}`;
+      }
+      if (_.has(object, 'children')) {
+        return `${spaces}  ${object.key}: {\n${iter(object.children, depth + 1)}\n${spaces}  }`;
+      }
+      if (object.type === 'unchanged') {
+        return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
+      }
+      return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
+    });
+    return result.join('\n');
+  };
+  return `{\n${iter(array)}\n}`;
+};
+
+const plain = (array) => {
+  const iter = (arr, depth = '') => {
+    const result = arr.map((object) => {
+      if (object.type === 'added') {
+        return `Property '${depth}${object.key}' was added with value: ${stringify(object.value)}\n`;
+      }
+      if (object.type === 'removed') {
+        return `Property '${depth}${object.key}' was removed\n`;
+      }
+      if (_.has(object, 'children')) {
+        return `${iter(object.children, `${depth}${object.key}.`)}`;
+      }
+      if (object.type === 'changed') {
+        return `Property '${depth}${object.key}' was updated. From ${stringify(object.oldValue)} to ${stringify(object.newValue)}\n`;
+      }
+      return null;
+    });
+    const finalResult = result.join('');
+    return finalResult;
+  };
+  return `${iter(array).slice(0, -1)}`;
+};
+
 const formatter = (array, format = 'stylish') => {
   switch (format) {
     case 'stylish': {
-      const iter1 = (arr, depth = 1) => {
-        const spacesCount = 4;
-        const spaces = ' '.repeat((spacesCount * depth) - 2);
-        const result = arr.map((object) => {
-          if (object.type === 'added') {
-            return `${spaces}+ ${object.key}: ${disClose(object.value, depth)}`;
-          }
-          if (object.type === 'removed') {
-            return `${spaces}- ${object.key}: ${disClose(object.value, depth)}`;
-          }
-          if (_.has(object, 'children')) {
-            return `${spaces}  ${object.key}: {\n${iter1(object.children, depth + 1)}\n${spaces}  }`;
-          }
-          if (object.type === 'unchanged') {
-            return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
-          }
-          return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
-        });
-        return result.join('\n');
-      };
-      return `{\n${iter1(array)}\n}`;
+      return stylish(array);
     }
-
     case 'plain': {
-      const iter2 = (arr, depth = '') => {
-        const result = arr.map((object) => {
-          if (object.type === 'added') {
-            return `Property '${depth}${object.key}' was added with value: ${stringify(object.value)}\n`;
-          }
-          if (object.type === 'removed') {
-            return `Property '${depth}${object.key}' was removed\n`;
-          }
-          if (_.has(object, 'children')) {
-            return `${iter2(object.children, `${depth}${object.key}.`)}`;
-          }
-          if (object.type === 'changed') {
-            return `Property '${depth}${object.key}' was updated. From ${stringify(object.oldValue)} to ${stringify(object.newValue)}\n`;
-          }
-          return null;
-        });
-        const finalResult = result.join('');
-        return finalResult;
-      };
-      return `${iter2(array).slice(0, -1)}`;
+      return plain(array);
     }
     case 'json':
       return JSON.stringify(array);
