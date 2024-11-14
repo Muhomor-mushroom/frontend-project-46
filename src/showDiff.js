@@ -10,18 +10,20 @@ const searchDiffOfKeys = (file1, file2) => {
   const sortedKeys = _.sortBy(keys);
   return sortedKeys.map((key) => {
     if (!_.has(firstKeys, key)) {
-      return { key: key, value: file2[key], type: 'added' };
+      return { key, value: file2[key], type: 'added' };
     }
     if (!_.has(secondKeys, key)) {
-      return { key: key, value: file1[key], type: 'removed' };
+      return { key, value: file1[key], type: 'removed' };
     }
     if (_.isObject(file1[key]) && _.isObject(file2[key])) {
-      return { key: key, children: searchDiffOfKeys(file1[key], file2[key]), type: 'nested' };
+      return { key, children: searchDiffOfKeys(file1[key], file2[key]), type: 'nested' };
     }
     if (file1[key] === file2[key]) {
-      return { key: key, value: file1[key], type: 'unchanged' };
+      return { key, value: file1[key], type: 'unchanged' };
     }
-    return { key: key, oldValue: file1[key], type: 'changed', newValue: file2[key] };
+    return {
+      key, oldValue: file1[key], type: 'changed', newValue: file2[key],
+    };
   });
 };
 
