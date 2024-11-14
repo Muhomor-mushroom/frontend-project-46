@@ -8,7 +8,7 @@ const searchDiffOfKeys = (file1, file2) => {
   const secondKeys = Object.keys(file2);
   const keys = _.union(firstKeys, secondKeys);
   const sortedKeys = _.sortBy(keys);
-    return sortedKeys.map((key) => {
+  return sortedKeys.map((key) => {
     if (!_.has(firstKeys, key)) {
       return { key, value: file2[key], type: 'added' };
     }

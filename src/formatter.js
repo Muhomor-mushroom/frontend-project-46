@@ -40,6 +40,9 @@ const stylish = (array) => {
         case 'changed': {
           return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
         }
+        default: {
+          throw new Error('not the correct type');
+        }
       }
     });
     return result.join('\n');
