@@ -21,9 +21,7 @@ const searchDiffOfKeys = (file1, file2) => {
     if (file1[key] === file2[key]) {
       return { key, value: file1[key], type: 'unchanged' };
     }
-    return {
-      key, oldValue: file1[key], type: 'changed', newValue: file2[key],
-    };
+    return { key, oldValue: file1[key], type: 'changed', newValue: file2[key] };
   });
 };
 
