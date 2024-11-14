@@ -4,28 +4,27 @@ import parsing from './parsing.js';
 import formatter from './formatter.js';
 
 const searchDiffOfKeys = (file1, file2) => {
-  const keysOfFirstFiles = Object.keys(file1);
-  const keysOfSecondFiles = Object.keys(file2);
-  const keysOfAllFiles = _.union(keysOfFirstFiles, keysOfSecondFiles);
-  const sortedKeys = _.sortBy(keysOfAllFiles);
-  const diff = sortedKeys.map((keys) => {
-    if (!keysOfFirstFiles.includes(keys)) {
-      return { key: keys, value: file2[keys], type: 'added' };
+  const firstKeys = Object.keys(file1);
+  const secondKeys = Object.keys(file2);
+  const keys = _.union(firstKeys, secondKeys);
+  const sortedKeys = _.sortBy(keys);
+    return sortedKeys.map((key) => {
+    if (!_.has(firstKeys, key)) {
+      return { key, value: file2[key], type: 'added' };
     }
-    if (!keysOfSecondFiles.includes(keys)) {
-      return { key: keys, value: file1[keys], type: 'removed' };
+    if (!_.has(secondKeys, key)) {
+      return { key, value: file1[key], type: 'removed' };
     }
-    if (_.isObject(file1[keys]) && _.isObject(file2[keys])) {
-      return { key: keys, children: searchDiffOfKeys(file1[keys], file2[keys]) };
+    if (_.isObject(file1[key]) && _.isObject(file2[key])) {
+      return { key, children: searchDiffOfKeys(file1[key], file2[key]), type: 'nested' };
     }
-    if (file1[keys] === file2[keys]) {
-      return { key: keys, value: file1[keys], type: 'unchanged' };
+    if (file1[key] === file2[key]) {
+      return { key, value: file1[key], type: 'unchanged' };
     }
     return {
-      key: keys, oldValue: file1[keys], type: 'changed', newValue: file2[keys],
+      key, oldValue: file1[key], type: 'changed', newValue: file2[key],
     };
   });
-  return diff;
 };
 
 const showDiff = (firstFilePath, secondFilePath, format = 'stylish') => {

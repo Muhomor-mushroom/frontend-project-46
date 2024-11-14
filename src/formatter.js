@@ -24,19 +24,23 @@ const stylish = (array) => {
     const spacesCount = 4;
     const spaces = ' '.repeat((spacesCount * depth) - 2);
     const result = arr.map((object) => {
-      if (object.type === 'added') {
-        return `${spaces}+ ${object.key}: ${disClose(object.value, depth)}`;
+      switch (object.type) {
+        case 'added': {
+          return `${spaces}+ ${object.key}: ${disClose(object.value, depth)}`;
+        }
+        case 'removed': {
+          return `${spaces}- ${object.key}: ${disClose(object.value, depth)}`;
+        }
+        case 'nested': {
+          return `${spaces}  ${object.key}: {\n${iter(object.children, depth + 1)}\n${spaces}  }`;
+        }
+        case 'unchanged': {
+          return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
+        }
+        case 'changed': {
+          return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
+        }
       }
-      if (object.type === 'removed') {
-        return `${spaces}- ${object.key}: ${disClose(object.value, depth)}`;
-      }
-      if (_.has(object, 'children')) {
-        return `${spaces}  ${object.key}: {\n${iter(object.children, depth + 1)}\n${spaces}  }`;
-      }
-      if (object.type === 'unchanged') {
-        return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
-      }
-      return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
     });
     return result.join('\n');
   };
