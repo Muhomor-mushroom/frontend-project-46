@@ -11,9 +11,8 @@ const disClose = (value, depth = 1) => {
   if (!_.isObject(value)) {
     return `${value}`;
   }
-  const spacesCount = 4;
-  const startSpaces = ' '.repeat((spacesCount * (depth + 1)) - 2);
-  const endSpaces = ' '.repeat(spacesCount * depth - 2);
+  const startSpaces = ' '.repeat((4 * (depth + 1)) - 2);
+  const endSpaces = ' '.repeat(4 * depth - 2);
   const keys = Object.keys(value);
   const result = keys.map((key) => `${startSpaces}  ${key}: ${disClose(value[key], depth + 1)}`);
   return `{\n${result.join('\n')}\n${endSpaces}  }`;
@@ -21,8 +20,7 @@ const disClose = (value, depth = 1) => {
 
 const stylish = (array) => {
   const iter = (arr, depth = 1) => {
-    const spacesCount = 4;
-    const spaces = ' '.repeat((spacesCount * depth) - 2);
+    const spaces = ' '.repeat((4 * depth) - 2);
     const result = arr.map((object) => {
       switch (object.type) {
         case 'added': {
@@ -53,19 +51,22 @@ const stylish = (array) => {
 const plain = (array) => {
   const iter = (arr, depth = '') => {
     const result = arr.map((object) => {
-      if (object.type === 'added') {
-        return `Property '${depth}${object.key}' was added with value: ${stringify(object.value)}\n`;
+      switch (object.type) {
+        case 'added': {
+          return `Property '${depth}${object.key}' was added with value: ${stringify(object.value)}\n`;
+        }
+        case 'removed': {
+          return `Property '${depth}${object.key}' was removed\n`;
+        }
+        case 'nested': {
+          return `${iter(object.children, `${depth}${object.key}.`)}`;
+        }
+        case 'changed': {
+          return `Property '${depth}${object.key}' was updated. From ${stringify(object.oldValue)} to ${stringify(object.newValue)}\n`;
+        }
+        default:
+          return null
       }
-      if (object.type === 'removed') {
-        return `Property '${depth}${object.key}' was removed\n`;
-      }
-      if (_.has(object, 'children')) {
-        return `${iter(object.children, `${depth}${object.key}.`)}`;
-      }
-      if (object.type === 'changed') {
-        return `Property '${depth}${object.key}' was updated. From ${stringify(object.oldValue)} to ${stringify(object.newValue)}\n`;
-      }
-      return null;
     });
     const finalResult = result.join('');
     return finalResult;
