@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import * as fs from 'fs';
+import path from 'node:path';
+import { cwd } from 'node:process';
 import parsing from './parsing.js';
 import formatter from './formatter.js';
 
-const searchDiffOfKeys = (file1, file2) => {
+const treeOfFiles = (file1, file2) => {
   const firstKeys = Object.keys(file1);
   const secondKeys = Object.keys(file2);
   const keys = _.union(firstKeys, secondKeys);
@@ -16,7 +18,7 @@ const searchDiffOfKeys = (file1, file2) => {
       return { key, value: file1[key], type: 'removed' };
     }
     if (_.isObject(file1[key]) && _.isObject(file2[key])) {
-      return { key, children: searchDiffOfKeys(file1[key], file2[key]), type: 'nested' };
+      return { key, children: treeOfFiles(file1[key], file2[key]), type: 'nested' };
     }
     if (file1[key] === file2[key]) {
       return { key, value: file1[key], type: 'unchanged' };
@@ -28,14 +30,19 @@ const searchDiffOfKeys = (file1, file2) => {
 };
 
 const showDiff = (firstFilePath, secondFilePath, format = 'stylish') => {
-  const firstFile = fs.readFileSync(firstFilePath, { encoding: 'utf8' });
-  const secondFile = fs.readFileSync(secondFilePath, { encoding: 'utf8' });
+  const myCWD = cwd();
+  const file1Path = path.resolve(`${myCWD}`, `${firstFilePath}`);
+  const file2Path = path.resolve(`${myCWD}`, `${secondFilePath}`);
 
-  const firstParsedFile = parsing(firstFilePath, firstFile);
-  const secondParsedFile = parsing(secondFilePath, secondFile);
+  const firstFile = fs.readFileSync(file1Path, { encoding: 'utf8' });
+  const secondFile = fs.readFileSync(file2Path, { encoding: 'utf8' });
 
-  const resultedArr = searchDiffOfKeys(firstParsedFile, secondParsedFile);
-  const formattedResult = formatter(resultedArr, format);
-  return formattedResult;
+  const firstParsedFile = parsing(file1Path, firstFile);
+  const secondParsedFile = parsing(file2Path, secondFile);
+
+  console.log(secondParsedFile);
+
+  const resultedArr = treeOfFiles(firstParsedFile, secondParsedFile);
+  return formatter(resultedArr, format);
 };
 export default showDiff;

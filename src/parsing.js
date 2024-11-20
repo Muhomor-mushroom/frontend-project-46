@@ -7,12 +7,18 @@ const extensionOfFile = (file) => {
 };
 
 const parsing = (filepath, readedFile) => {
-  if (extensionOfFile(filepath) === 'json') {
-    const parsedFile = JSON.parse(readedFile);
-    return parsedFile;
+  switch (extensionOfFile(filepath)) {
+    case '.json': {
+      const parsedFile = JSON.parse(readedFile);
+      return parsedFile;
+    }
+    case '.yml': {
+      const yamlInJson = yaml.load(readedFile);
+      return yamlInJson;
+    }
+    default: {
+      return null;
+    }
   }
-
-  const yamlInJson = yaml.load(readedFile);
-  return yamlInJson;
 };
 export default parsing;
