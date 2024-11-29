@@ -5,10 +5,10 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/f1929cd5e32affdd7b6e/maintainability)](https://codeclimate.com/github/Muhomor-mushroom/frontend-project-46/maintainability)
 [![asciicast](https://asciinema.org/a/279cUT1UlEyhrpfGR54dmxVvB.svg)](https://asciinema.org/a/279cUT1UlEyhrpfGR54dmxVvB)
 
-EXPLANATION : 
+EXPLANATION: 
  This project is a written console command. This command is designed to compare the first file with the second file. As a result, the command returns a result that will indicate which files were added, which files were removed, and which files were modified. When writing a command, specifying the --format [type] key can specify the format in which the result should be output. There are three formats to choose from: 'stylish', 'plain' and 'json'. This command accepts files in two formats: 'json' and 'yaml' and is able to compare json files with yaml files.
 
- REQUIREMENTS :
+ REQUIREMENTS:
  
  1 - Installed NodeJS package manager on your PC. (nodejs.org);
 
