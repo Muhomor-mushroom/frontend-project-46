@@ -16,5 +16,5 @@ EXPLANATION:
 
  3 - Minimal skills of working with the console.
 
- INSTRUCTION OF WORK WITH THE PROJECT :
+ INSTRUCTION OF WORK WITH THE PROJECT:
  First of all, this project is based on commander.js. Before you start using the project, you need to install nodeJS package manager on your pc (nodejs.org). After that You need to enter 'npm i' in the console and download all dependent packages. Once all required dependencies have been downloaded, the project can be ready to use.
