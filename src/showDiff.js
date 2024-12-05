@@ -40,8 +40,6 @@ const showDiff = (firstFilePath, secondFilePath, format = 'stylish') => {
   const firstParsedFile = parsing(file1Path, firstFile);
   const secondParsedFile = parsing(file2Path, secondFile);
 
-  console.log(secondParsedFile);
-
   const resultedArr = treeOfFiles(firstParsedFile, secondParsedFile);
   return formatter(resultedArr, format);
 };
