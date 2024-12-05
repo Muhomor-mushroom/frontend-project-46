@@ -10,7 +10,7 @@ program
   .helpOption('-h, --help', 'output usage information')
   .action((filepath1, filepath2) => {
     const opts = program.opts();
-    return console.log(showDiff(filepath1, filepath2, opts.format));
+    return (showDiff(filepath1, filepath2, opts.format));
   });
 
 program.parse();
