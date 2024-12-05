@@ -16,24 +16,23 @@ const stylish = (array) => {
     const spaces = ' '.repeat((4 * depth) - 2);
     const result = arr.map((object) => {
       switch (object.type) {
-        case 'added': {
+        case 'added':
           return `${spaces}+ ${object.key}: ${disClose(object.value, depth)}`;
-        }
-        case 'removed': {
+
+        case 'removed':
           return `${spaces}- ${object.key}: ${disClose(object.value, depth)}`;
-        }
-        case 'nested': {
+
+        case 'nested':
           return `${spaces}  ${object.key}: {\n${iter(object.children, depth + 1)}\n${spaces}  }`;
-        }
-        case 'unchanged': {
+
+        case 'unchanged':
           return `${spaces}  ${object.key}: ${disClose(object.value, depth)}`;
-        }
-        case 'changed': {
+
+        case 'changed':
           return `${spaces}- ${object.key}: ${disClose(object.oldValue, depth)}\n${spaces}+ ${object.key}: ${disClose(object.newValue, depth)}`;
-        }
-        default: {
+
+        default:
           throw new Error('not the correct type');
-        }
       }
     });
     return result.join('\n');

@@ -11,21 +11,21 @@ const plain = (array) => {
   const iter = (arr, depth = '') => {
     const result = arr.map((object) => {
       switch (object.type) {
-        case 'added': {
+        case 'added':
           return `Property '${depth}${object.key}' was added with value: ${stringify(object.value)}\n`;
-        }
-        case 'removed': {
+
+        case 'removed':
           return `Property '${depth}${object.key}' was removed\n`;
-        }
-        case 'nested': {
+
+        case 'nested':
           return `${iter(object.children, `${depth}${object.key}.`)}`;
-        }
-        case 'changed': {
+
+        case 'changed':
           return `Property '${depth}${object.key}' was updated. From ${stringify(object.oldValue)} to ${stringify(object.newValue)}\n`;
-        }
-        case 'unchanged': {
+
+        case 'unchanged':
           return null;
-        }
+
         default:
           throw new Error('Error');
       }

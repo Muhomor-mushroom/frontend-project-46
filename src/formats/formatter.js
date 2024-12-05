@@ -1,5 +1,6 @@
-import stylish from './formats/stylish.js';
-import plain from './formats/plain.js';
+import stylish from './stylish.js';
+import plain from './plain.js';
+import jsonFormat from './jsonFormat.js'
 
 const formatter = (array, format) => {
   switch (format) {
@@ -10,7 +11,7 @@ const formatter = (array, format) => {
       return plain(array);
     }
     case 'json':
-      return JSON.stringify(array);
+      return jsonFormat(array);
     default:
       throw new Error('invalid format');
   }

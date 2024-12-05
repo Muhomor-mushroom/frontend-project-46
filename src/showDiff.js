@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import path from 'node:path';
 import { cwd } from 'node:process';
 import parsing from './parsing.js';
-import formatter from './formatter.js';
+import formatter from './formats/formatter.js';
 
 const treeOfFiles = (file1, file2) => {
   const firstKeys = Object.keys(file1);
