@@ -1,6 +1,6 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
-import jsonFormat from './jsonFormat.js'
+import jsonFormat from './jsonFormat.js';
 
 const formatter = (array, format) => {
   switch (format) {
